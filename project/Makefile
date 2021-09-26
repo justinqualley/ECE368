@@ -20,7 +20,7 @@ test1: pa1
 	diff output1.b examples/15sa.b
 test2: pa1
 	./pa1 -a examples/1k.b output2.b
-	diff output2.b examples/1ksa.b
+	diff output2.b examples/1Ksa.b
 test3: pa1
 	./pa1 examples/15sl.b output3.b
 test4: pa1
