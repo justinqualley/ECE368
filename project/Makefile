@@ -37,7 +37,7 @@ test9: pa1
 	./pa1 examples/1M.b output9.b
 
 memory: main
-	$(VAL) ./main examples/15.b output1.b
+	$(VAL) ./pa1 -a examples/15.b output1.b
 
 clean: # remove all machine generated files
 	rm -f main *.o output? vallog testgen
