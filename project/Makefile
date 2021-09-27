@@ -36,7 +36,7 @@ test8: pa1
 test9: pa1
 	./pa1 examples/1M.b output9.b
 
-memory: main
+memory: pa1
 	$(VAL) ./pa1 -a examples/15.b output1.b
 
 clean: # remove all machine generated files
