@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h> 
 #include <string.h>
-#include <unistd.h>
+#include <getopt.h>
 #include "list_of_list.h"
 #include "shell_array.h"
 #include "shell_list.h"
