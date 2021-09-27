@@ -12,6 +12,12 @@ int h(int i){
         return out;
     }
 }
+void printArray(long * arr, int size){
+    for(int i = 0; i < size; i++){
+        printf("%ld\n",arr[i]);
+    }
+    printf("Done\n");
+}
 
 #ifdef TEST_READARRAY
 long* Array_Load_From_File(char *filename, int *size){
