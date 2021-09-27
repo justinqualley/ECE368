@@ -20,6 +20,7 @@ int main(int argc, char * * argv){
     Array_Shellsort(arr, size, &n_comp);
     written = Array_Save_To_File(argv[2], arr, size);
     printArray(arr, size);
+    return EXIT_SUCCESS;
 }
 
 
