@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.cpp": "cpp",
+        "shell_list.h": "c",
+        "string.h": "c",
+        "__tuple": "c",
+        "array": "c",
+        "random": "c"
+    },
+    "C_Cpp.dimInactiveRegions": false
+}
