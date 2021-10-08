@@ -4,7 +4,7 @@
 #include <string.h>
 #include "shell_array.h"
 
-int h(int i){
+static int h(int i){
     if(i == 1){
         return 1;
     }else{
@@ -12,12 +12,12 @@ int h(int i){
         return out;
     }
 }
-void printArray(long * arr, int size){
+/*static void printArray(long * arr, int size){
     for(int i = 0; i < size; i++){
         printf("%ld\n",arr[i]);
     }
     printf("Done\n");
-}
+}*/
 
 #ifdef TEST_READARRAY
 long* Array_Load_From_File(char *filename, int *size){
