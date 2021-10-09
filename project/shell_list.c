@@ -180,13 +180,22 @@ Node *List_Shellsort(Node *list, long *n_comp){
     for(long s = 1; s < x; s++){                              //Pass x - 1
         long kMax = h(x - s);                                    //Recusive call to generate k
         printf("K = %ld\n", kMax);
+        /*for(long j = k; j <= (size-1); j++){                  //Scan through array
+            long temp_r = array[j];                           //Store in temp if swap neccessary
+            long i = j;                                        
+            while(i >= k && array[i-k] > temp_r){             //Insertion sort on smaller lists
+                *n_comp = *n_comp + 1;
+                array[i] = array[i-k];                        //Swap if the higher indexed is lesser
+                i = i-k;
+            } 
+        array[i] = temp_r;                                    //Other half of the swap
+        }*/
         Node **i = &list;
         Node **j = &list;
         k = kMax;
-        while((*j)->next != NULL && k-- > 0){
+        while((*j)->next != NULL && k-- > 0){ //
             j = &(*j)->next;
         }
-        
         while(*j != NULL){                                    
             val1 = (*i)->value;
             val2 = (*j)->value;
