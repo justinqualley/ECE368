@@ -2,7 +2,7 @@ WARNING = -Wall -Wshadow --pedantic
 ERROR = -Wvla -Werror
 GCC = gcc -std=c99 -g $(WARNING) $(ERROR) 
 VAL = valgrind --tool=memcheck --log-file=vallog --leak-check=full --verbose
-TESTFALGS = -DTEST_READARRAY -DTEST_SAVEARRAY -DTEST_SORTARRAY -DTEST_READLIST -DTEST_SAVELIST -DTEST_SORTLIST
+TESTFALGS = 
 
 SRCS = pa1.c shell_array.c shell_list.c
 OBJS = $(SRCS:%.c=%.o)

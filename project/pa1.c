@@ -75,6 +75,10 @@ int main(int argc, char * * argv){
         free(arr);
     }else if(lflag == 1){
         Node* h = List_Load_From_File(argv[2]);
+        if(h == NULL){
+          free(arr);
+          return EXIT_FAILURE;
+        }
         Node *scan = h; 
         size = 0;
         while (scan != NULL) 

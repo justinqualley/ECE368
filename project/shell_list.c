@@ -30,7 +30,6 @@ static void append(Node **h, long val){
         temp->next = n;
     }
 }
-#ifdef TEST_READLIST
 Node *List_Load_From_File(char *filename){
     FILE * fptr = fopen(filename, "rb");
     if(fptr == NULL){                       //What should I return?
@@ -50,9 +49,6 @@ Node *List_Load_From_File(char *filename){
     fclose(fptr);
     return h;
 }
-#endif
-
-#ifdef TEST_SAVELIST
 int List_Save_To_File(char *filename, Node *list){
     FILE * fptr = fopen(filename, "wb");
     if(fptr == NULL || list == NULL){
@@ -70,15 +66,12 @@ int List_Save_To_File(char *filename, Node *list){
     fclose(fptr);
     return written;
 }
-#endif
 static void swap(Node **i, Node **j)
 {
     Node *tmp = *i;
     *i = *j;
     *j = tmp;
 }
-
-#ifdef TEST_SORTLIST
 Node *List_Shellsort(Node *list, long *n_comp){
     *n_comp = 0;
     if(list == NULL){
@@ -120,4 +113,3 @@ Node *List_Shellsort(Node *list, long *n_comp){
     }
     return list;
 }
-#endif

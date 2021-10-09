@@ -12,14 +12,6 @@ static int h(int i){
         return out;
     }
 }
-/*static void printArray(long * arr, int size){
-    for(int i = 0; i < size; i++){
-        printf("%ld\n",arr[i]);
-    }
-    printf("Done\n");
-}*/
-
-#ifdef TEST_READARRAY
 long* Array_Load_From_File(char *filename, int *size){
     long *arr = NULL;
    
@@ -40,8 +32,6 @@ long* Array_Load_From_File(char *filename, int *size){
     fclose(fptr);
     return arr;
 }
-#endif
-#ifdef TEST_SAVEARRAY
 int Array_Save_To_File(char *filename, long *array, int size){
     FILE * fptr = fopen(filename, "wb");
     if(fptr == NULL){
@@ -51,8 +41,6 @@ int Array_Save_To_File(char *filename, long *array, int size){
     fclose(fptr);
     return written;
 }
-#endif
-#ifdef TEST_SORTARRAY
 void Array_Shellsort(long *array, int size, long *n_comp){
     long x = 0;                                               //Made all variables long for very large test cases
     for(x = 1; h(x) < size; x++){}                            //Find x such that h(x) <= size
@@ -70,5 +58,4 @@ void Array_Shellsort(long *array, int size, long *n_comp){
         }
     }
 }
-#endif
 
