@@ -12,31 +12,12 @@ static int h(int i){
         return out;
     }
 }
-static void printList(Node* h)
-{
-  if (h == NULL)
-    {
-      return;
-    }
-  printf("-------------------------\n");
-  Node * p;
-  printf("from head: \n");
-  while (h != NULL)
-    {
-      p = h -> next;
-      printf("%ld\n", h -> value);
-      h = p;
-    }
-}
-static void printNode(Node* h){
-    if (h == NULL)
-    {
-      return;
-    }
-    printf("Node: %ld\n", h->value);
-}
 static void append(Node **h, long val){
     Node *n = malloc(sizeof(Node));
+    if(n == NULL){
+        fprintf(stderr, "Malloc failed");
+        return;
+    }
     n->value = val;
     n->next = NULL;
     if(*h == NULL){
@@ -56,6 +37,9 @@ Node *List_Load_From_File(char *filename){
         return NULL;
     }
     Node *h = malloc(sizeof(Node));         //Head of list
+    if(h == NULL){
+        return NULL;
+    }
     long value;                             //add if else malloc fails
     fread(&value, sizeof(long), 1, fptr);   //Read and store first value
     h->value = value;
@@ -87,89 +71,22 @@ int List_Save_To_File(char *filename, Node *list){
     return written;
 }
 #endif
-/*void pushTailList(Node *node, List **h){ //add to tail
-    List *item = malloc(sizeof(List));
-    if(item == NULL){
-        return;
-    }
-    item->node = node;
-    item->next = NULL;
-    if(*h == NULL){
-        *h = item;
-    }else{
-        List *scan = *h;
-        while(scan->next != NULL){
-            scan = scan->next;
-        }
-        scan->next = item;
-    }
-}
-void pushLinked(Node **h, long value){ //add to head
-    Node *item = malloc(sizeof(Node));
-    if(item == NULL){
-        return;
-    }
-    item->value = value;
-    item->next = *h;
-    *h = item;
-}*/
-//static void swapNodes(Node* i, Node* j, Node* iPrev, Node* jPrev)
-//{
-     //printf("SWAPPED");
-    // Nothing to do if x and y are same
-   /* if (x == y)
-        return;
- 
-    // Search for x (keep track of prevX and CurrX
-    Node *prevX = NULL, *currX = head_ref;
-    while (currX && currX->value != x) {
-        prevX = currX;
-        currX = currX->next;
-    }
- 
-    // Search for y (keep track of prevY and CurrY
-    Node *prevY = NULL, *currY = head_ref;
-    while (currY && currY->value != y) {
-        prevY = currY;
-        currY = currY->next;
-    }
- 
-    // If either x or y is not present, nothing to do
-    if (currX == NULL || currY == NULL)
-        return;
- 
-    // If x is not head of linked list
-    if (prevX != NULL)
-        prevX->next = currY;
-    else // Else make y as new head
-        head_ref = currY;
- 
-    // If y is not head of linked list
-    if (prevY != NULL)
-        prevY->next = currX;
-    else // Else make x as new head
-        head_ref = currX;
- 
-    // Swap next pointers
-    Node* temp = currY->next;
-    currY->next = currX->next;
-    currX->next = temp;*/
-    //printList(i);
-    //free?
 static void swap(Node **i, Node **j)
 {
     Node *tmp = *i;
     *i = *j;
     *j = tmp;
 }
+
 #ifdef TEST_SORTLIST
 Node *List_Shellsort(Node *list, long *n_comp){
+    *n_comp = 0;
     if(list == NULL){
         return NULL;
     }
     long x = 0;                                               //Made all variables long for very large test cases
     long val1, val2;
-    int k, size = 0;
+    int k, u, size = 0;
     Node *scan = list; 
     while (scan != NULL) 
     { 
@@ -177,19 +94,8 @@ Node *List_Shellsort(Node *list, long *n_comp){
         scan = scan->next; 
     }
     for(x = 1; h(x) < size; x++){}                            //Find x such that h(x) <= size
-    for(long s = 1; s < x; s++){                              //Pass x - 1
-        long kMax = h(x - s);                                    //Recusive call to generate k
-        printf("K = %ld\n", kMax);
-        /*for(long j = k; j <= (size-1); j++){                  //Scan through array
-            long temp_r = array[j];                           //Store in temp if swap neccessary
-            long i = j;                                        
-            while(i >= k && array[i-k] > temp_r){             //Insertion sort on smaller lists
-                *n_comp = *n_comp + 1;
-                array[i] = array[i-k];                        //Swap if the higher indexed is lesser
-                i = i-k;
-            } 
-        array[i] = temp_r;                                    //Other half of the swap
-        }*/
+    for(long t = 1; t < x; t++){                              //Pass x - 1
+        long kMax = h(x - t);                                    //Recusive call to generate k
         Node **i = &list;
         Node **j = &list;
         k = kMax;
@@ -199,25 +105,20 @@ Node *List_Shellsort(Node *list, long *n_comp){
         while(*j != NULL){                                    
             val1 = (*i)->value;
             val2 = (*j)->value;
-            printNode(*i);
-            printNode(*j);
             if(val1 > val2){
+                *n_comp = *n_comp + 1;
+                u = 0;
                 if(*i == list){
                     *i = list;
                 }
-                printf("We must swap\n");
-                printList(list);
                 swap(i ,j);
                 swap(&(*i)->next, &(*j)->next);
-
-                printList(list);
+                //need to go back now and check rest of sublist
             }
             i = &(*i)->next;
             j = &(*j)->next;
         }
     }
-    printf("Finished sorting\n");
-    printList(list);
     return list;
 }
 #endif

@@ -31,6 +31,10 @@ long* Array_Load_From_File(char *filename, int *size){
     fseek(fptr, 0, SEEK_END);
     *size = ftell(fptr) / sizeof(long);      //Number of items in array
     arr = malloc(*size*sizeof(long));  
+    if(arr == NULL){
+        fprintf(stderr, "Malloc failed");
+        return arr;
+    }
     fseek(fptr, 0, SEEK_SET);               //Set back to top for reading
     fread(arr, sizeof(long), *size, fptr);
     fclose(fptr);
@@ -45,7 +49,6 @@ int Array_Save_To_File(char *filename, long *array, int size){
     }
     int written = fwrite(array, sizeof(long), size, fptr);
     fclose(fptr);
-    free(array);
     return written;
 }
 #endif
