@@ -86,7 +86,7 @@ Node *List_Shellsort(Node *list, long *n_comp){
     }
     long x = 0;                                               //Made all variables long for very large test cases
     long val1, val2;
-    int k, u, size = 0;
+    int k, size = 0;
     Node *scan = list; 
     while (scan != NULL) 
     { 
@@ -107,7 +107,6 @@ Node *List_Shellsort(Node *list, long *n_comp){
             val2 = (*j)->value;
             if(val1 > val2){
                 *n_comp = *n_comp + 1;
-                u = 0;
                 if(*i == list){
                     *i = list;
                 }
