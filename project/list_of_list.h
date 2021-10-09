@@ -5,7 +5,7 @@
 
 typedef struct _List {
    Node *node;
-   struct _List *next;
+   struct _List *next; 
 } List;
 
 #endif

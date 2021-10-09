@@ -8,7 +8,7 @@
 #include "shell_list.h"
 
 
-void printList(Node* h)
+static void printList(Node* h)
 {
   if (h == NULL)
     {
@@ -47,7 +47,7 @@ int main(int argc, char * * argv){
     }
     int size;
     long n_comp = 0;
-    long *arr;
+    long *arr = NULL;
     int written;
     if(aflag == 1){
         arr = Array_Load_From_File(argv[2], &size);
@@ -57,7 +57,8 @@ int main(int argc, char * * argv){
     }else if(lflag == 1){
         Node* h = List_Load_From_File(argv[2]);
         printList(h);
-        //List_Shellsort(arr, &n_comp);
+        List_Shellsort(h, &n_comp);
+        printList(h);
         //written = List_Save_To_File(argv[3], arr);
     }
     

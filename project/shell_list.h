@@ -2,7 +2,7 @@
 #define __SHELL_LIST_H__
 
 typedef struct _Node {
-   long value;
+   long value; 
    struct _Node *next;
 } Node;
 

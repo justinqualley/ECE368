@@ -12,6 +12,29 @@ static int h(int i){
         return out;
     }
 }
+static void printList(Node* h)
+{
+  if (h == NULL)
+    {
+      return;
+    }
+  printf("-------------------------\n");
+  Node * p;
+  printf("from head: \n");
+  while (h != NULL)
+    {
+      p = h -> next;
+      printf("%ld\n", h -> value);
+      h = p;
+    }
+}
+static void printNode(Node* h){
+    if (h == NULL)
+    {
+      return;
+    }
+    printf("Node: %ld\n", h->value);
+}
 static void append(Node **h, long val){
     Node *n = malloc(sizeof(Node));
     n->value = val;
@@ -90,21 +113,22 @@ void pushLinked(Node **h, long value){ //add to head
     item->next = *h;
     *h = item;
 }*/
-static void swapNodes(Node** head_ref, int x, int y)
-{
+//static void swapNodes(Node* i, Node* j, Node* iPrev, Node* jPrev)
+//{
+     //printf("SWAPPED");
     // Nothing to do if x and y are same
-    if (x == y)
+   /* if (x == y)
         return;
  
     // Search for x (keep track of prevX and CurrX
-    Node *prevX = NULL, *currX = *head_ref;
+    Node *prevX = NULL, *currX = head_ref;
     while (currX && currX->value != x) {
         prevX = currX;
         currX = currX->next;
     }
  
     // Search for y (keep track of prevY and CurrY
-    Node *prevY = NULL, *currY = *head_ref;
+    Node *prevY = NULL, *currY = head_ref;
     while (currY && currY->value != y) {
         prevY = currY;
         currY = currY->next;
@@ -118,19 +142,25 @@ static void swapNodes(Node** head_ref, int x, int y)
     if (prevX != NULL)
         prevX->next = currY;
     else // Else make y as new head
-        *head_ref = currY;
+        head_ref = currY;
  
     // If y is not head of linked list
     if (prevY != NULL)
         prevY->next = currX;
     else // Else make x as new head
-        *head_ref = currX;
+        head_ref = currX;
  
     // Swap next pointers
     Node* temp = currY->next;
     currY->next = currX->next;
-    currX->next = temp;
+    currX->next = temp;*/
+    //printList(i);
     //free?
+static void swap(Node **i, Node **j)
+{
+    Node *tmp = *i;
+    *i = *j;
+    *j = tmp;
 }
 #ifdef TEST_SORTLIST
 Node *List_Shellsort(Node *list, long *n_comp){
@@ -138,7 +168,7 @@ Node *List_Shellsort(Node *list, long *n_comp){
         return NULL;
     }
     long x = 0;                                               //Made all variables long for very large test cases
-    int val1, val2;
+    long val1, val2;
     int k, size = 0;
     Node *scan = list; 
     while (scan != NULL) 
@@ -149,31 +179,36 @@ Node *List_Shellsort(Node *list, long *n_comp){
     for(x = 1; h(x) < size; x++){}                            //Find x such that h(x) <= size
     for(long s = 1; s < x; s++){                              //Pass x - 1
         long kMax = h(x - s);                                    //Recusive call to generate k
-        Node *i = malloc(sizeof(Node));
-        i = list;
-        Node *j = malloc(sizeof(Node));
-        j = list;
+        printf("K = %ld\n", kMax);
+        Node **i = &list;
+        Node **j = &list;
         k = kMax;
-        while(k-- > 0){
-            j = j->next;
+        while((*j)->next != NULL && k-- > 0){
+            j = &(*j)->next;
         }
-        for(; j != NULL; i = i->next, j = j->next){
-            val1 = i->value;
-            val2 = j->value;
-            if(i->value > j->value){
-                if(i == list){
-                    list = j;
+        
+        while(*j != NULL){                                    
+            val1 = (*i)->value;
+            val2 = (*j)->value;
+            printNode(*i);
+            printNode(*j);
+            if(val1 > val2){
+                if(*i == list){
+                    *i = list;
                 }
-                Node *temp = malloc(sizeof(Node));
-                temp = i;
-                i = j;
-                j = temp; //Do I need this?
-                
-                swapNodes(&list, val1, val2);
+                printf("We must swap\n");
+                printList(list);
+                swap(i ,j);
+                swap(&(*i)->next, &(*j)->next);
 
+                printList(list);
             }
+            i = &(*i)->next;
+            j = &(*j)->next;
         }
     }
+    printf("Finished sorting\n");
+    printList(list);
     return list;
 }
 #endif

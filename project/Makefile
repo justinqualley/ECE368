@@ -19,7 +19,7 @@ test1: pa1
 	./pa1 -a examples/15.b output1.b
 	diff output1.b examples/15sa.b
 testlist: pa1
-	./pa1 -l examples/1K.b output1.b
+	./pa1 -l examples/15.b output1.b
 test2: pa1
 	./pa1 -a examples/1K.b output2.b
 	diff output2.b examples/1Ksa.b
