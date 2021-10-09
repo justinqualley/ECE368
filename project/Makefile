@@ -17,7 +17,6 @@ testall: test1 test2 test3 test4 test5 test6 test7 test8 test9
 
 test1: pa1
 	./pa1 -a examples/1k.b output1.b
-	diff output1.b examples/1ksa.b
 testlist: pa1
 	./pa1 -l examples/15.b output1.b
 test2: pa1
