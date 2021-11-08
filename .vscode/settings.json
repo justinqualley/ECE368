@@ -24,6 +24,11 @@
         "istream": "c",
         "ostream": "c",
         "array": "c",
-        "utility": "c"
+        "utility": "c",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "*.tcc": "cpp",
+        "__locale": "cpp",
+        "stdio.h": "c"
     }
 }
