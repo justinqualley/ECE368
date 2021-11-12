@@ -5,6 +5,7 @@
 #include <getopt.h>
 #include "tree.h"
 #include "file.h"
+#include "eval.h"
 #define COUNT 10
 
 void print2DUtil(Tnode *root, int space)
@@ -74,7 +75,7 @@ int main(int argc, char **argv){
     }
     if(bflag){
         char *filename = argv[2];
-        txt_to_b(filename, argv[3]);
+        //txt_to_b(filename, argv[3]);
         Tnode **root = malloc(sizeof(Tnode));
         if(root == NULL){
             fprintf(stderr, "Error: Line 75 malloc failed\n");
@@ -82,6 +83,21 @@ int main(int argc, char **argv){
         buildTree(root, filename);
         printInorder(*root);
         printf("\n");
+    }else if(eflag){
+        int size;
+        int *array = loadArray(argv[2], &size);
+        /*for(int i = 0; i < size; i++){
+            printf("%d ",array[i]);
+        }*/
+        //size = sizeof(*array) / sizeof(array[0]);
+        //printf("size: %d\n", size);
+        int *st = malloc(size*sizeof(int)); //Stack
+        int top = -1;
+        if(isbst(array, size, top, st)){
+            printf("can\n");
+        }else{
+            printf("can't\n");
+        }
     }
     return EXIT_SUCCESS;
 }

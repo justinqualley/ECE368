@@ -29,6 +29,7 @@
         "unordered_map": "cpp",
         "*.tcc": "cpp",
         "__locale": "cpp",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "__tuple": "c"
     }
 }
