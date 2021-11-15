@@ -177,11 +177,6 @@ Tnode* newNode(int key, Tnode *left, Tnode *right){
     return n;
 }
 
-
-void postOrder(){
-
-}
-
 Tnode* cr(Tnode *old_root){
     Tnode *new_root = old_root->left;
     old_root->left = new_root->right;
@@ -195,3 +190,33 @@ Tnode* ccr(Tnode *old_root){
     new_root->right = old_root;
     return new_root;
 }
+
+Tnode* preBuild(int *a, int lidx, int ridx){   
+    if (lidx > ridx){
+        //printf("NULL return\n");
+        return NULL;
+    }   
+    Tnode *root = malloc(sizeof(*root));   
+    if (root != NULL) {     
+        root->key = a[lidx]; 
+        //printf("key: %d\n", root->key);    
+        int partition_idx = lidx + 1;     
+        while (partition_idx <= ridx && a[partition_idx] <= a[lidx]){ partition_idx++; }    
+        //printf("go left\n");
+        root->left = preBuild(a, lidx+1,partition_idx-1);     
+        //printf("go right\n");
+        root->right = preBuild(a, partition_idx, ridx);   
+    }     
+    return root; 
+}
+
+int getHeight(Tnode *node){
+    if(node == NULL){
+        return 0;
+    }
+    return 1 + max(getHeight(node->left), getHeight(node->right));
+}
+int max(int x, int y){
+    return x >= y ? x : y;
+}
+

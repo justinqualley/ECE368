@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h> 
+#include "tree.h"
 
-int* loadArray(char *filename, int *size);
-bool isbst(int* preorder, int size, int top, int *stack);
+int* loadArray(char *filename, int *size, int *vflag);
+bool isbst(int *preorder, int size, int top, int *stack);
+bool isbalanced(Tnode *root);
 bool isempty(int top);
 int getTop(int *stack, int *top);
 int pop(int *stack, int *top);

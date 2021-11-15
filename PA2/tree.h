@@ -8,9 +8,9 @@ Tnode* delete(Tnode *root, int key);
 Tnode* getSuccessor(Tnode* curr);
 Tnode* newNode(int key, Tnode *left, Tnode *right);
 void buildTree(Tnode **root, char *filename);
-
-
-void postOrder();
+Tnode *preBuild(int *a, int lidx, int ridx);
+int getHeight(Tnode *node);
+int max(int x, int y);
 
 Tnode* cr(Tnode* old_root);
 

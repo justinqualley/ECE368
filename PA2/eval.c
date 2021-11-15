@@ -11,16 +11,27 @@ The left and right subtree each must also be a binary search tree.
 HB Criteria:
 A tree is height-balanced if every node has balance 0, 1, or –1
 */
-int* loadArray(char *filename, int *size){
+
+int* loadArray(char *filename, int *size, int *vflag){
     int *arr = NULL;
    
     FILE * fptr = fopen(filename, "rb"); // open a file whose name is filename for reading
     if(fptr == NULL) {                   // if fopen fails, return false. Do NOT fclose
       *size = 0;
+      *vflag = -1;
       return arr;
     }
     fseek(fptr, 0, SEEK_END);
-    *size = ftell(fptr) / (sizeof(int) + sizeof(char));      //Number of items in array
+    int fileSize = ftell(fptr);
+    int nodeSize = sizeof(int) + sizeof(char);
+    if(fileSize % nodeSize != 0){
+        *size = 0;
+        *vflag = 0;
+        return arr;
+    }
+    *vflag = 1;
+    *size = fileSize / nodeSize;      //Number of items in array
+    //printf("size: %d\n", *size);
     arr = malloc(*size*sizeof(int));  
     int num;
     int ch;
@@ -39,17 +50,31 @@ int* loadArray(char *filename, int *size){
     fclose(fptr);
     return arr;
 }
+bool isbalanced(Tnode *root){
+    int lh;
+    int rh;
 
-bool isbst(int* preorder, int size, int top, int *stack)
+    if(root == NULL){ return true; }
+    lh = getHeight(root->left);
+    rh = getHeight(root->right);
+
+    if(abs(lh - rh) < 2 && isbalanced(root->left) && isbalanced(root->right)){
+        return true;
+    }
+    return false;
+}
+
+bool isbst(int *preorder, int size, int top, int *stack)
 {
     int root = INT_MIN;
     for (int i=0; i < size; i++){
         int tmp = getTop(stack, &top);
         if(i == size-1 && preorder[i] < tmp){ return false; }                       //If the last node added is on the left, we need right to be complete
-        else if(i == 1 && preorder[i] > stack[top]){ return false; }                //If we go right immedeiately CAN I DO THIS?
+        //else if(i == 1 && preorder[i] > stack[top]){ return false; }                //If we go right immedeiately CAN I DO THIS?
         else if(preorder[i] < root){ return false; }                                //If in the right subtree we find a node less than root
-        while(!isempty(top) && preorder[i]>stack[top]){ root = pop(stack, &top); }  //Keep setting new root by traversing through right tree when neccessary
+        while(!isempty(top) && preorder[i]>stack[top]){ root = pop(stack, &top); /*printf("root: %d\n", root);*/ }  //Keep setting new root by traversing through right tree when neccessary
         push(stack, preorder[i],  &top, size);                                      //Push if stack empty are we are traversing left
+        //printf("push(%d)\n", preorder[i]);
     }
     return true;
 }
@@ -72,32 +97,3 @@ void push(int *stack, int item, int *top, int size){
     stack[++(*top)] = item;
     return;
 }
-/*void buildBST_helper(int preIndex, int n, int pre[],int min, int max){
-    if (preIndex >= n)
-        return;
- 
-    if (min <= pre[preIndex] && pre[preIndex] <= max) {
-        // build node_
-        int rootData = pre[preIndex];
-        preIndex++;
- 
-        // build left subtree
-        buildBST_helper(preIndex, n, pre, min, rootData);
- 
-        // build right subtree
-        buildBST_helper(preIndex, n, pre, rootData, max);
-    }
-    // else
-    // return NULL;
-}*/
- 
-/*bool canRepresentBST(int arr[], int N)
-{
-    // code here
-    int min = INT_MIN, max = INT_MAX;
-    int preIndex = 0;
- 
-    buildBST_helper(preIndex, N, arr, min, max);
- 
-    return preIndex == N;
-}*/
