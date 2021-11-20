@@ -58,7 +58,7 @@ bool isbalanced(Tnode *root){
     lh = getHeight(root->left);
     rh = getHeight(root->right);
 
-    if(abs(lh - rh) < 2 && isbalanced(root->left) && isbalanced(root->right)){
+    if((abs(lh - rh) < 2) && (isbalanced(root->left) && isbalanced(root->right))){
         return true;
     }
     return false;
@@ -68,10 +68,10 @@ bool isbst(int *preorder, int size, int top, int *stack)
 {
     int root = INT_MIN;
     for (int i=0; i < size; i++){
-        int tmp = getTop(stack, &top);
-        if(i == size-1 && preorder[i] < tmp){ return false; }                       //If the last node added is on the left, we need right to be complete
+        //int tmp = getTop(stack, &top);
+        if(i == size-1 && preorder[i] < stack[top]){ return false; }                       //If the last node added is on the right, but it is less
         //else if(i == 1 && preorder[i] > stack[top]){ return false; }                //If we go right immedeiately CAN I DO THIS?
-        else if(preorder[i] < root){ return false; }                                //If in the right subtree we find a node less than root
+        if(preorder[i] < root){ return false; }                                //If in the right subtree we find a node less than root
         while(!isempty(top) && preorder[i]>stack[top]){ root = pop(stack, &top); /*printf("root: %d\n", root);*/ }  //Keep setting new root by traversing through right tree when neccessary
         push(stack, preorder[i],  &top, size);                                      //Push if stack empty are we are traversing left
         //printf("push(%d)\n", preorder[i]);

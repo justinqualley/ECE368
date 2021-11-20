@@ -17,25 +17,27 @@ testall: test1 test2 test3 test4 test5 test6 test7 test8 test9
 
 b0: pa4
 	./pa4 -b examples/ops0.b outputs/output0.b
-	diff outputs/output0.b examples/ops0.b
+	diff examples/tree0.b outputs/output0.b
 b1: pa4
 	./pa4 -b examples/ops1.b outputs/output1.b
-	diff outputs/output1.b examples/ops1.b
+	diff examples/tree1.b outputs/output1.b
 b2: pa4
 	./pa4 -b examples/ops2.b outputs/output2.b
-	diff outputs/output2.b examples/ops2.b
+	diff examples/tree2.b outputs/output2.b
 b3: pa4
 	./pa4 -b examples/ops3.b outputs/output3.b
-	diff outputs/output3.b examples/ops3.b
+	diff examples/tree3.b outputs/output3.b
+	
 b: b0 b1 b2 b3
+
 e0: pa4
-	./pa4 -e examples/tree0.b
+	./pa4 -e outputs/output0.b
 e1: pa4
-	./pa4 -e examples/tree1.b
+	./pa4 -e outputs/output1.b
 e2: pa4
-	./pa4 -e examples/tree2.b
+	./pa4 -e outputs/output2.b
 e3: pa4
-	./pa4 -e examples/tree3.b
+	./pa4 -e outputs/output3.b
 e0i: pa4
 	./pa4 -e examples/invalidtree0.b
 e1i: pa4

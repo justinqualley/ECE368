@@ -46,6 +46,7 @@ int main(int argc, char **argv){
         buildTree(root, filename);
         printInorder(*root);
         printf("\n");
+        tree_to_b(*root, argv[3]);
     }else if(eflag){
         int size;                                                   //Size of the preorder traversal of the tree
         int vflag;                                                  //Flag to set if on load, valid input file
@@ -66,7 +67,6 @@ int main(int argc, char **argv){
             fprintf(stderr, "Error: Line 75 malloc failed\n");
         }
         root = preBuild(preorder, 0, size-1);                       //Build BST
-        tree_to_b(root, "output1");
         printInorder(root); printf("\n");
         if(isbalanced(root)){
             out[2] = 1;
