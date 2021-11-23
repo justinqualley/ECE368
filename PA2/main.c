@@ -63,11 +63,11 @@ int main(int argc, char **argv){
         int *status = NULL;                                         //Load children status into array
         loadArray(argv[2], &size, &vflag, &preorder, &status);      //Load input into preorder[] array
         out[0] = vflag;
-        /*if(preorder == NULL){                                       //Exit action when invalid file
+        if(preorder == NULL){                                       //Exit action when invalid file
             fprintf(stdout, "%d,X,X", out[0]);
             return EXIT_FAILURE;
         }
-        int *st = malloc(size*sizeof(int));                         //Create stack to validate if BST
+        /*int *st = malloc(size*sizeof(int));                         //Create stack to validate if BST
         int top = -1;                                               //Init stack to size of array and set top to empty
         if(isbst(preorder, size, top, st)){ out[1] = 1; }           //If bst set first element to 1
         Tnode *root = malloc(sizeof(Tnode));                        //Root node of BST to build
