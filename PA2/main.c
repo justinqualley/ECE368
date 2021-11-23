@@ -67,10 +67,11 @@ int main(int argc, char **argv){
             fprintf(stdout, "%d,X,X", out[0]);
             return EXIT_FAILURE;
         }
-        /*int *st = malloc(size*sizeof(int));                         //Create stack to validate if BST
+        int *st = malloc(size*sizeof(int));                         //Create stack to validate if BST
         int top = -1;                                               //Init stack to size of array and set top to empty
         if(isbst(preorder, size, top, st)){ out[1] = 1; }           //If bst set first element to 1
-        Tnode *root = malloc(sizeof(Tnode));                        //Root node of BST to build
+        free(st);
+        /*Tnode *root = malloc(sizeof(Tnode));                        //Root node of BST to build
         if(root == NULL){
             fprintf(stderr, "Error: Line 75 malloc failed\n");
         }
