@@ -81,6 +81,7 @@ int main(int argc, char **argv){
         if(isbalanced(root)){ out[2] = 1; }                         //If height-balanced set second element to 1
         destroy(root);                                              //No longer need tree in memory
         free(ip);
+        free(st);
         fprintf(stdout, "%d,%d,%d\n", out[0], out[1], out[2]);      //Final evaluation display
     }
     return EXIT_SUCCESS;

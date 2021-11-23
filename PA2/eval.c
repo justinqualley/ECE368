@@ -44,6 +44,8 @@ void loadArray(char *filename, int *size, int *vflag, int **preorder, int **stat
     fclose(fptr);
     *preorder = arr;
     *stat = status;
+    free(arr);
+    free(status);
     return;
 }
 bool isbalanced(Tnode *root){
