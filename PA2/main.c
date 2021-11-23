@@ -7,21 +7,6 @@
 #include "file.h"
 #include "eval.h"
 
-void printInorder(Tnode* node)
-{
-    if (node == NULL) { return; }
-    printInorder(node->left);
-    printf("%d ", node->key);
-    printInorder(node->right);
-}
-void printPreorder(Tnode* node)
-{
-    if (node == NULL) { return; }
-    printf("%d ", node->key);
-    printPreorder(node->left);
-    printPreorder(node->right);
-}
-
 int main(int argc, char **argv){
     int out[3] = {0, 0, 0};
     if(argc >= 5){
@@ -39,23 +24,19 @@ int main(int argc, char **argv){
     if(bflag){
         char *filename = argv[2];
         int valid = 0;
-        Tnode **root = malloc(sizeof(Tnode));
-        if(root == NULL){
-            fprintf(stderr, "Error: Line 75 malloc failed\n");
-        }
-        buildTree(root, filename, &valid);
+        Tnode *root = NULL;
+        root = buildTree(root, filename, &valid);
         if(root == NULL){ 
             fprintf(stdout, "%d\n", -1); 
             return EXIT_FAILURE; 
         }
-        tree_to_b(*root, argv[3]);
+        tree_to_b(root, argv[3]);
         if(valid == 0) { 
             fprintf(stdout, "%d\n", 0);
             return EXIT_FAILURE; 
         }
         fprintf(stdout, "%d\n", 1);
-        destroy(*root);
-        free(root);
+        destroy(root);
     }else if(eflag){
         int size;                                                   //Size of the preorder traversal of the tree
         int vflag;                                                  //Valid input file flag

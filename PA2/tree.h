@@ -8,7 +8,7 @@ Tnode* delete(Tnode *root, int key);
 void destroy(Tnode *root);
 Tnode* balance(Tnode *root);
 Tnode* newNode(int key, Tnode *left, Tnode *right);
-void buildTree(Tnode **root, char *filename, int *valid);
+Tnode* buildTree(Tnode *root, char *filename, int *valid);
 Tnode *preBuild(int *preorder, int *status, int *i, int size);
 int getBalance(Tnode *root);
 int getHeight(Tnode *node);

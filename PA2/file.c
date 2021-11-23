@@ -40,7 +40,6 @@ void tree_to_b(Tnode *root, char* output){
 void traverse(Tnode* node, int num, char ch, FILE *fp1)
 {
     if (node == NULL) { return; }
-    //printf("%d ", node->key);
     if(node -> right != NULL && node -> left != NULL){
         ch = 0x3;
     }else if(node->right != NULL){

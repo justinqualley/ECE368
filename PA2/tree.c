@@ -1,7 +1,7 @@
 #include "tree.h"
-#include <stdbool.h>
 #define INT_MAX 2147483647
 #define INT_MIN -2147483647
+
 void destroy(Tnode *root){
     if(root == NULL) { 
         return; 
@@ -74,25 +74,26 @@ Tnode* insert(Tnode *root, int key){
     return root;
 }
 
-void buildTree(Tnode **root, char *filename, int *valid)
+Tnode* buildTree(Tnode *root, char *filename, int *valid)
 {
     FILE * fptr = fopen(filename, "rb");
     if(fptr == NULL){      
-        *root = NULL;                
-        return;
+        root = NULL;                
+        return root;
     }
     int value;
     char op;
     while(fread(&value, sizeof(int), 1, fptr) > 0 && fread(&op, sizeof(char), 1, fptr) > 0){ 
         if(op == 'i'){
-            *root = insert(*root, value);
+            root = insert(root, value);
         }else if(op == 'd'){
-            *root = delete(*root, value);
+            root = delete(root, value);
         }
     }
     if(!(ftell(fptr) % (sizeof(char) + sizeof(int)))){  //If we built a tree but of wrong format
         *valid = 1;
     }
+    return root;
 }
 
 Tnode* newNode(int key, Tnode *left, Tnode *right){

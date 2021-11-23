@@ -7,26 +7,24 @@ TESTFALGS =
 SRCS = tree.c main.c file.c eval.c
 OBJS = $(SRCS:%.c=%.o)
 
-pa1: $(OBJS)
+pa4: $(OBJS)
 	$(GCC) $(OBJS) -o pa4
 
 .c.o: 
 	$(GCC) $(TESTFALGS) -c $*.c 
 
-testall: test1 test2 test3 test4 test5 test6 test7 test8 test9
-
 b0: pa4
-	./pa4 -b examples/ops0.b outputs/output0.b
-	diff examples/tree0.b outputs/output0.b
+	./pa4 -b examples/ops0.b output0.b
+	diff examples/tree0.b output0.b
 b1: pa4
-	./pa4 -b examples/ops1.b outputs/output1.b
-	diff examples/tree1.b outputs/output1.b
+	./pa4 -b examples/ops1.b output1.b
+	diff examples/tree1.b output1.b
 b2: pa4
-	./pa4 -b examples/ops2.b outputs/output2.b
-	diff examples/tree2.b outputs/output2.b
+	./pa4 -b examples/ops2.b output2.b
+	diff examples/tree2.b output2.b
 b3: pa4
-	./pa4 -b examples/ops3.b outputs/output3.b
-	diff examples/tree3.b outputs/output3.b
+	./pa4 -b examples/ops3.b output3.b
+	diff examples/tree3.b output3.b
 	
 b: b0 b1 b2 b3
 
@@ -46,11 +44,13 @@ e2i: pa4
 	./pa4 -e examples/invalidtree2.b
 ei: e0i e1i e2i
 e: e0 e1 e2 e3 ei
-
-ememory: pa4
-	$(VAL) ./pa4 -e examples/tree3.b
-bmemory: pa4
-	$(VAL) ./pa4 -b examples/tree3.b outputs/output3.b 
+final: b e em bm
+em: pa4
+	$(VAL) ./pa4 -e examples/tree1.b
+	tail vallog
+bm: pa4
+	$(VAL) ./pa4 -b examples/ops1.b outputs/output1.b 
+	tail vallog
 
 clean: # remove all machine generated files
 	rm -f main *.o output? vallog testgen
