@@ -10,7 +10,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/PA2/pa4",
-            "args": ["-b", "examples/ops1.b", "outputs/output1.b"],
+            "args": ["-e", "examples/tree0.b"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],

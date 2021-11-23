@@ -54,7 +54,6 @@ void traverse(Tnode* node, int num, char ch, FILE *fp1)
     num = node->key;
     fwrite(&num, sizeof(int), 1, fp1);
     fwrite(&ch, sizeof(char), 1, fp1);
-    //printf("%d %c\n", num, ch);
     traverse(node->left, num, ch, fp1);
     traverse(node->right, num, ch, fp1);
 }

@@ -31,13 +31,13 @@ b3: pa4
 b: b0 b1 b2 b3
 
 e0: pa4
-	./pa4 -e outputs/output0.b
+	./pa4 -e examples/tree0.b
 e1: pa4
-	./pa4 -e outputs/output1.b
+	./pa4 -e examples/tree1.b
 e2: pa4
-	./pa4 -e outputs/output2.b
+	./pa4 -e examples/tree2.b
 e3: pa4
-	./pa4 -e outputs/output3.b
+	./pa4 -e examples/tree3.b
 e0i: pa4
 	./pa4 -e examples/invalidtree0.b
 e1i: pa4
@@ -47,8 +47,10 @@ e2i: pa4
 ei: e0i e1i e2i
 e: e0 e1 e2 e3 ei
 
-memory: pa1
-	$(VAL) ./pa1 -l examples/15.b output1.b
+ememory: pa4
+	$(VAL) ./pa4 -e examples/tree3.b
+bmemory: pa4
+	$(VAL) ./pa4 -b examples/tree3.b outputs/output3.b 
 
 clean: # remove all machine generated files
 	rm -f main *.o output? vallog testgen

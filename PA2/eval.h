@@ -3,7 +3,7 @@
 #include <stdbool.h> 
 #include "tree.h"
 
-int* loadArray(char *filename, int *size, int *vflag);
+void loadArray(char *filename, int *size, int *vflag, int **arr, int **status);
 bool isbst(int *preorder, int size, int top, int *stack);
 bool isbalanced(Tnode *root);
 bool isempty(int top);

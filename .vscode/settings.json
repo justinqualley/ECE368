@@ -30,6 +30,7 @@
         "*.tcc": "cpp",
         "__locale": "cpp",
         "stdio.h": "c",
-        "__tuple": "c"
+        "__tuple": "c",
+        "ios": "c"
     }
 }

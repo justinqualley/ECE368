@@ -5,15 +5,13 @@
 
 Tnode* insert(Tnode *root, int key);
 Tnode* delete(Tnode *root, int key);
-Tnode* maxSearch(Tnode* curr);
+void destroy(Tnode *root);
+Tnode* balance(Tnode *root);
 Tnode* newNode(int key, Tnode *left, Tnode *right);
-void buildTree(Tnode **root, char *filename);
-Tnode *preBuild(int *a, int lidx, int ridx);
+void buildTree(Tnode **root, char *filename, int *valid);
+Tnode *preBuild(int *preorder, int *status, int *i, int size);
 int getBalance(Tnode *root);
-Tnode *minSearch(Tnode* root);
 int getHeight(Tnode *node);
 int max(int x, int y);
-
 Tnode* cr(Tnode* old_root);
-
 Tnode* ccr(Tnode* old_root);
