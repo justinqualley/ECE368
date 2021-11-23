@@ -30,7 +30,6 @@ void tree_to_b(Tnode *root, char* output){
     char ch = '\0';
     fp1 = fopen(output, "wb");
     if (!fp1) {
-        printf("Unable to open the output file!!\n");
         return;
     }
     traverse(root, num, ch, fp1);

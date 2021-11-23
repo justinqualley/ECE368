@@ -3,7 +3,9 @@
 #define INT_MAX 2147483647
 #define INT_MIN -2147483647
 void destroy(Tnode *root){
-    if(root == NULL) { return; }
+    if(root == NULL) { 
+        return; 
+    }
     destroy(root->left);
     destroy(root->right);
     free(root);

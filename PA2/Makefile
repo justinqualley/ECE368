@@ -1,7 +1,7 @@
 WARNING = -Wall -Wshadow --pedantic
 ERROR = -Wvla -Werror
 GCC = gcc -std=c99 -g $(WARNING) $(ERROR) 
-VAL = valgrind --tool=memcheck --log-file=vallog --leak-check=full --verbose
+VAL = valgrind --tool=memcheck --log-file=vallog --leak-check=full --verbose --track-origins=yes
 TESTFALGS = 
 
 SRCS = tree.c main.c file.c eval.c

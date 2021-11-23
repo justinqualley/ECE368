@@ -71,18 +71,17 @@ int main(int argc, char **argv){
         int top = -1;                                               //Init stack to size of array and set top to empty
         if(isbst(preorder, size, top, st)){ out[1] = 1; }           //If bst set first element to 1
         free(st);
-        /*Tnode *root = malloc(sizeof(Tnode));                        //Root node of BST to build
-        if(root == NULL){
-            fprintf(stderr, "Error: Line 75 malloc failed\n");
-        }
+        Tnode *root = NULL;                                         //Root node of BST to build
         int *ip = malloc(sizeof(int));
         int i = 0;
         *ip = i;
         root = preBuild(preorder, status, ip, size);                //Build BST if valid
         if(isbalanced(root)){ out[2] = 1; }                         //If height-balanced set second element to 1
         destroy(root);                                              //No longer need tree in memory
+        root = NULL;
         free(ip);
-        //free(st);
+        free(preorder);
+        free(status);
         fprintf(stdout, "%d,%d,%d\n", out[0], out[1], out[2]);      //Final evaluation display*/
     }
     return EXIT_SUCCESS;
