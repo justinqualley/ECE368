@@ -85,7 +85,6 @@ Tnode* buildTree(Tnode *root, char *filename, int *valid)
     char op;
     while(fread(&value, sizeof(int), 1, fptr) > 0 && fread(&op, sizeof(char), 1, fptr) > 0){ 
         if(op == 'i'){
-            printf("%d\n", value);
             root = insert(root, value);
         }else if(op == 'd'){
             root = delete(root, value);
