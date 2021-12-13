@@ -10,12 +10,6 @@ int main(int argc, char **argv){
     short m;
     short n;
     short **grid = read_grid(argv[1], &m, &n);
-    for(int i = 0; i < m; i++){
-        for(int j = 0; j < n; j++){
-            printf("%d ", grid[i][j]);
-        } 
-        printf("\n");
-    }
     //grid_to_txt(grid, argv[2], m, n);
     shortest(grid, m, n, 0);
 }

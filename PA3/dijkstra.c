@@ -50,7 +50,7 @@ void Dijkstra(int Graph[MAX][MAX], int n, int start) {
   // Printing the distance
   for (i = 0; i < n; i++)
     if (i != start) {
-      printf("\nDistance from source to %d: %d", i, distance[i]);
+      printf("\nDistance from source to %d: %d, %d", i, distance[i], pred[i]);
     }
 }
 int main() {
