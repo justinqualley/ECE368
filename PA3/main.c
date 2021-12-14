@@ -85,7 +85,7 @@ int main(int argc, char **argv){
     }
     free(pq);
     for (i = 0; i < m; i++){
-        free(graph[i]);
+        free((*graph)[i]);
     }
     free(graph);
     //free(cost);
