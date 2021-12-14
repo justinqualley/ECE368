@@ -24,17 +24,18 @@ int main(int argc, char **argv){
     Node* path = malloc(sizeof(Node));                               //Pointer to hold potential shortest path
     Node* prev = malloc(sizeof(Node));                               //Pointer to hold shortest path
     prev->dist = SHRT_MAX;                                          
-    Node *vertex;                                                    //Structure to hold each data for each vertex of graph
-    Node **pq = malloc((m)*(n) * sizeof(Node*));                     //Array of pointers to nodes that functions as a priority queue
+    Node *vertex; 
+    Node **pq;
+    pq = malloc((m)*(n) * sizeof(Node*));                            //Array of pointers to nodes that functions as a priority queue
     Node ***graph = malloc(m * sizeof(Node**));                      //2D Array of pointers to nodes that function as our graph
     for(i = 0; i < m; i++){ graph[i] = malloc(n * sizeof(Node*)); }  //Allocate 2D array of pointers
     for(i = 0; i < m; i++){
         for(j = 0; j < n; j++){
             vertex = malloc(sizeof(Node));
-            vertex->dist = SHRT_MAX;                                //Init distance to each node is infinity
-            vertex->cost = cost[i][j];                              //Cost to travel to this node
+            vertex->dist = SHRT_MAX;                                 //Init distance to each node is infinity
+            vertex->cost = cost[i][j];                               //Cost to travel to this node
             vertex->pred = NULL;
-            vertex->i = i;                                          //It's position we will use as it's identifier
+            vertex->i = i;                                           //It's position we will use as it's identifier
             vertex->j = j;
             vertex->visited = false;
             graph[i][j] = vertex;   
@@ -81,11 +82,15 @@ int main(int argc, char **argv){
     free(prev);
     for(i = 0; i < m; i++){
         printf("%d", (pq[i])->cost);
-        free(pq[i]);
+        //free(pq[i]);
     }
     free(pq);
     for (i = 0; i < m; i++){
-        free((*graph)[i]);
+        for(j = 0; j < n; j++){
+            free((graph)[i][j]); //*(*graph + i)
+        }
+        //free((*graph)[j]); //*(*graph + i)
+        free(graph[i]) ;    //*(graph + i)
     }
     free(graph);
     //free(cost);
