@@ -26,13 +26,13 @@ t2: pa3
 t3: pa3
 	./pa3 examples/5_5.b outputs/5_5.t outputs/5_5.f outputs/5_5.p
 	diff examples/5_5.t outputs/5_5.t
-	diff examples/5_5.f outputs/5_5.f
 	diff examples/5_5.p outputs/5_5.p
 t4: pa3
 	./pa3 examples/7_7.b outputs/7_7.t outputs/7_7.f outputs/7_7.p
 	diff examples/7_7.t outputs/7_7.t
 	diff examples/7_7.f outputs/7_7.f
 	diff examples/7_7.p outputs/7_7.p
+ta: t1 t2 t3 t4
 m: pa3
 	$(VAL) ./pa3 examples/4_5.b outputs/4_5.t outputs/4_5.f outputs/4_5.p
 	tail vallog

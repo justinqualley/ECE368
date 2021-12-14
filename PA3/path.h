@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<limits.h>
 #include<stdlib.h>
+
 typedef struct _Node {
    short dist;
    short cost;
@@ -12,7 +13,6 @@ typedef struct _Node {
 } Node;
 void insert_node(Node* arr[], Node *s, int *n);
 void init_graph(Node*** graph, short** cost, int m, int n);
-void print_graph(Node*** graph, short** cost, int m, int n);
 void heapify_node(Node* arr[], int i, int n);
 Node shortest(Node*** graph, Node** pq, short** cost, int size, int m, int n, int is, int js);
 Node* extract_min(Node* arr[], int *n);
