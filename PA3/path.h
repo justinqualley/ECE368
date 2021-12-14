@@ -11,12 +11,14 @@ typedef struct _Node {
    bool visited;
 } Node;
 void insert_node(Node* arr[], Node *s, int *n);
+void init_graph(Node*** graph, short** cost, int m, int n);
+void print_graph(Node*** graph, short** cost, int m, int n);
 void heapify_node(Node* arr[], int i, int n);
-short shortest(Node*** grid, Node** pq, short** cost, int size, int m, int n, int is, int js);
+Node shortest(int** times, Node*** graph, Node** pq, short** cost, int size, int m, int n, int is, int js);
 Node* extract_min(Node* arr[], int *n);
 void delete_root(Node* arr[], int *n);
 void heapify(Node* pq[], int size);
-void explore(Node*** grid, Node **pq, short** cost, int size, int i, int j, int p, int q);
+void explore(Node*** graph, Node **pq, short** cost, int size, int i, int j, int p, int q);
 void swap_node(Node **a, Node **b);
-void print_path(Node*** grid, Node** pq, int* size, int m, int n);
+void print_path(int** times, Node*** graph, Node** pq, int* size, int m, int n);
 

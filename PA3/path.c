@@ -1,30 +1,22 @@
 #include "path.h"
 
-short shortest(Node*** grid, Node** pq, short** cost, int size, int m, int n, int is, int js){
-    int i, j;
-    for(i = 0; i < m; i++){                                         //Print out the grid to check we're good to start
-        for(j = 0; j < n; j++){
-            printf("%d ", (grid[i][j])->cost);
-        }
-        printf("\n");
-    }
-    printf("\n");
-    Node *u = NULL;                                                 //Node we will operate on each iteration
-    (grid[is][js])->dist = 0;                                       //Init src
+Node shortest(int** times, Node*** graph, Node** pq, short** cost, int size, int m, int n, int is, int js){
+    int i, j, p, q;                                                 //Indexing variables
+    init_graph(graph, cost, m, n);
+    print_graph(graph, cost, m, n);
+    (graph[is][js])->dist = 0;                                       //Init src
     heapify(pq, size); 
-    int p;                                                          //Indexing variable for adjacent nodes
-    int q;                                                          //Indexing variable for adjacent nodes
+    Node *u = NULL;                                                 //Node we will operate on each iteration
     while(size > 0){                                                //while pq not empty
         u = extract_min(pq, &size);                                 //extract the shortest path
         i = u->i;                                                   //Find it's location i.e. identifier
         j = u->j;                                                 
-        if(i < m - 1){ p = i + 1; q = j;     explore(grid, pq, cost, size, i, j, p, q); } //Check bottom
-        if(i > 0)    { p = i - 1; q = j;     explore(grid, pq, cost, size, i, j, p, q); } //Check top
-        if(j < n - 1){ p = i;     q = j + 1; explore(grid, pq, cost, size, i, j, p, q); } //Check right
-        if(j > 0)    { p = i;     q = j - 1; explore(grid, pq, cost, size, i, j, p, q); } //Check left
+        if(i < m - 1){ p = i + 1; q = j;     explore(graph, pq, cost, size, i, j, p, q); } //Check bottom
+        if(i > 0)    { p = i - 1; q = j;     explore(graph, pq, cost, size, i, j, p, q); } //Check top
+        if(j < n - 1){ p = i;     q = j + 1; explore(graph, pq, cost, size, i, j, p, q); } //Check right
+        if(j > 0)    { p = i;     q = j - 1; explore(graph, pq, cost, size, i, j, p, q); } //Check left
     }
-    print_path(grid, pq, &size, m, n);                                                    //Print the distance and vertices of all exit possibilities
-    size = (pq[0])->dist;
+    print_path(times, graph, pq, &size, m, n);                                                    //Print the distance and vertices of all exit possibilities
     /*for(i = 0; i < m*n; i++){
         printf("(%d, %d)\n ", (pq[i])->i, (pq[i])->i);
     }
@@ -34,19 +26,40 @@ short shortest(Node*** grid, Node** pq, short** cost, int size, int m, int n, in
     free(pq);
     for(i = 0; i < m; i++){
         for(j = 0; j < n; j++){
-            free(grid[i][j]);
+            free(graph[i][j]);
         }
-        free(grid[i]);
+        free(graph[i]);
     }
-    free(grid);*/
-    return size;                                                                         //Print path adds each dist back into PQ so we can easily get the shortest path
+    free(graph);*/
+    return *(pq[0]);                                                                      //Print path adds each dist back into PQ so we can easily get the shortest path
 }
-void print_path(Node*** grid, Node** pq, int* size, int m, int n){
+void print_graph(Node*** graph, short** cost, int m, int n){
+    for(int i = 0; i < m; i++){                                         //Print out the graph to check we're good to start
+        for(int j = 0; j < n; j++){
+            printf("%d ", (graph[i][j])->cost);
+        }
+        printf("\n");
+    }
+}
+void init_graph(Node*** graph, short** cost, int m, int n){
+    for(int i = 0; i < m; i++){
+        for(int j = 0; j < n; j++){
+            (graph[i][j])->dist = SHRT_MAX;                                //Init distance to each node is infinity
+            (graph[i][j])->cost = cost[i][j];                              //Cost to travel to this node
+            (graph[i][j])->pred = NULL;
+            (graph[i][j])->i = i;                                          //It's position we will use as it's identifier
+            (graph[i][j])->j = j;
+            (graph[i][j])->visited = false;
+        }
+    }
+}
+void print_path(int** times, Node*** graph, Node** pq, int* size, int m, int n){
     Node *scan = NULL;                                                                              //Node to scan over linked list of paths
     for(int i = 0; i < n; i++){                                                                     //Search through bottom row
-        scan = (grid[m-1][i])->pred;                                                                
-        printf("dist: %d, (%d, %d)", (grid[m-1][i])->dist, (grid[m-1][i])->i,(grid[m-1][i])->j);
-        insert_node(pq, grid[m-1][i], size);                                                        //Insert each node back into PQ so we can extract min later
+        scan = (graph[m-1][i])->pred;                                                                
+        printf("dist: %d, (%d, %d)", (graph[m-1][i])->dist, (graph[m-1][i])->i,(graph[m-1][i])->j);
+        insert_node(pq, graph[m-1][i], size);                                                        //Insert each node back into PQ so we can extract min later
+        (*times)[i] = (graph[m-1][i])->dist;
         while(scan != NULL){
             printf("(%d, %d)", scan->i,scan->j);                                                    //Print out vertices of the path
             scan = scan->pred;
@@ -54,13 +67,13 @@ void print_path(Node*** grid, Node** pq, int* size, int m, int n){
         printf("\n");
     }
 }
-void explore(Node*** grid, Node **pq, short** cost, int size, int i, int j, int p, int q){
-    if((grid[p][q])->dist > cost[p][q] + (grid[i][j])->dist && !(grid[p][q])->visited){     //Update distance to node required
-        (grid[p][q])->dist = cost[p][q] + (grid[i][j])->dist;                               //d[v] = d[u] + w<u,v>
-        (grid[p][q])->pred = grid[i][j];                                                    //pred[v] = u
+void explore(Node*** graph, Node **pq, short** cost, int size, int i, int j, int p, int q){
+    if((graph[p][q])->dist > cost[p][q] + (graph[i][j])->dist && !(graph[p][q])->visited){     //Update distance to node required
+        (graph[p][q])->dist = cost[p][q] + (graph[i][j])->dist;                               //d[v] = d[u] + w<u,v>
+        (graph[p][q])->pred = graph[i][j];                                                    //pred[v] = u
         heapify(pq, size);                                                                  //Update(PQ)
     }
-    (grid[i][j])->visited = true;                                                           
+    (graph[i][j])->visited = true;                                                           
 }
 void heapify(Node* pq[], int size){
     for(int k = (size/2) - 1; k >= 0; k--){

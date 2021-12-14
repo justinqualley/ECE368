@@ -4,41 +4,78 @@
 #include"path.h"
 
 /*
-./pa3 binary grid file text grid file fastest times file fastest path file
+./pa3 binary graph file text graph file fastest times file fastest path file
 */
 int main(int argc, char **argv){
     short m;
     short n;
-    short **cost = read_grid(argv[1], &m, &n);
-    //grid_to_txt(grid, argv[2], m, n);
-    int* fastestPath = malloc(n * sizeof fastestPath);
+    short **cost = read_graph(argv[1], &m, &n);
+    //graph_to_txt(graph, argv[2], m, n);
+    int* times = malloc(n * sizeof times);
+    //Node* fastest = malloc(m+n * sizeof times);
+    //Node* tempPath = NULL;
     int i;
     int j;
     int size = 0;
+    Node* vertices = malloc(n*m * sizeof(Node));
+    Node* path = malloc(sizeof(Node));
+    Node* prev = malloc(1* sizeof(Node));
+    prev->dist = SHRT_MAX;
+    //path = prev;
     Node *vertex;                                                   //Structure to hold each data for each vertex of graph
     Node **pq = malloc(m*n * sizeof *pq);                           //Array of pointers to nodes that functions as a priority queue
-    Node ***grid = malloc(m * sizeof(Node**));                      //2D Array of pointers to nodes that function as our graph
-    for(i = 0; i < m; i++){ grid[i] = malloc(n * sizeof(Node*)); }  //Allocate 2D array of pointers
+    Node ***graph = malloc(m * sizeof(Node**));                      //2D Array of pointers to nodes that function as our graph
+    //Node path;
+    for(i = 0; i < m; i++){ graph[i] = malloc(n * sizeof(Node*)); }  //Allocate 2D array of pointers
     for(i = 0; i < m; i++){
         for(j = 0; j < n; j++){
             vertex = malloc(sizeof *vertex);
-            grid[i][j] = vertex;
+            graph[i][j] = vertex;
             insert_node(pq, vertex, &size);                     //Put each vertex in the PQ
         }
     }
+    Node* scan = NULL;
     for(int k = 0; k < n; k++){
-        for(i = 0; i < m; i++){
-            for(j = 0; j < n; j++){
-                (grid[i][j])->dist = SHRT_MAX;                                //Init distance to each node is infinity
-                (grid[i][j])->cost = cost[i][j];                              //Cost to travel to this node
-                (grid[i][j])->pred = NULL;
-                (grid[i][j])->i = i;                                          //It's position we will use as it's identifier
-                (grid[i][j])->j = j;
-                (grid[i][j])->visited = false;
-            }
+        *path = shortest(&times, graph, pq, cost, size, m, n, 0, k); //path is the exit node with least distance for each entry
+        printf("Fastest Times:\n");
+        for(j= 0; j < n; j++){
+            printf("%d, ", times[j]);
         }
-        fastestPath[i] = shortest(grid, pq, cost, size, m, n, 0, k);
-        printf("Fastest: %d\n", fastestPath[i]);
+        printf("\n");
+        if(path->dist < prev->dist){
+            printf("changed\n");
+            *prev = *path;
+            scan = path;
+            i = 0;
+            while(scan != NULL){
+                vertices[i] = *(scan);
+                scan = scan->pred;
+                i++;
+            }
+            (vertices[i]).cost = -1;
+        }
     }
-    free(fastestPath);
+    i = 0;
+    while((vertices[i]).cost >= 0){
+        printf("(%d, %d) ", (vertices[i]).i, (vertices[i]).j);
+        i++;
+    }
+   /* Node* scan = NULL;
+    printf("Fastest:\n");
+    for(i = 0; i < n; i++){
+        scan = &paths[i];
+        printf("cost: %d", scan->dist);
+        while(scan != NULL){
+            printf("(%d, %d)", scan->i,scan->j);                                                    //Print out vertices of the path
+            scan = scan->pred;
+        }
+        printf("\n");
+    printf("Fastest: %d ", prev->dist);
+    *scan = *prev;
+    while(scan != NULL){
+        printf("(%d, %d)", scan->i,scan->j);                                                    //Print out vertices of the path
+        scan = scan->pred;
+    }
+    printf("\n");*/
+    //free(times);
 }
