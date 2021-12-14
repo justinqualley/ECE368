@@ -36,11 +36,8 @@ int main(int argc, char **argv){
     }
     Node* scan = NULL;
     for(int k = 0; k < n; k++){
-        *path = shortest(&times, graph, pq, cost, size, m, n, 0, k); //path is the exit node with least distance for each entry
-        printf("Fastest Times:\n");
-        for(j= 0; j < n; j++){
-            printf("%d, ", times[j]);
-        }
+        *path = shortest(graph, pq, cost, size, m, n, 0, k); //path is the exit node with least distance for each entry
+        times[k] = path->dist;
         printf("\n");
         if(path->dist < prev->dist){
             printf("changed\n");
@@ -55,11 +52,18 @@ int main(int argc, char **argv){
             (vertices[i]).cost = -1;
         }
     }
+    printf("Fastest Times:\n");
+    for(i = 0; i < n; i++){
+        printf("%d ", times[i]);
+    }
+    printf("\n");
+    printf("Fastest Path:\n");
     i = 0;
     while((vertices[i]).cost >= 0){
         printf("(%d, %d) ", (vertices[i]).i, (vertices[i]).j);
         i++;
     }
+    printf("cost: %d\n", vertices[0].dist);
    /* Node* scan = NULL;
     printf("Fastest:\n");
     for(i = 0; i < n; i++){

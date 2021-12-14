@@ -1,14 +1,17 @@
 #include "path.h"
 
-Node shortest(int** times, Node*** graph, Node** pq, short** cost, int size, int m, int n, int is, int js){
+Node shortest(Node*** graph, Node** pq, short** cost, int size, int m, int n, int is, int js){
     int i, j, p, q;                                                 //Indexing variables
     init_graph(graph, cost, m, n);
     print_graph(graph, cost, m, n);
+    //short tempDist = (graph[is][js])->dist;
     (graph[is][js])->dist = 0;                                       //Init src
     heapify(pq, size); 
     Node *u = NULL;                                                 //Node we will operate on each iteration
     while(size > 0){                                                //while pq not empty
+
         u = extract_min(pq, &size);                                 //extract the shortest path
+
         i = u->i;                                                   //Find it's location i.e. identifier
         j = u->j;                                                 
         if(i < m - 1){ p = i + 1; q = j;     explore(graph, pq, cost, size, i, j, p, q); } //Check bottom
@@ -16,7 +19,7 @@ Node shortest(int** times, Node*** graph, Node** pq, short** cost, int size, int
         if(j < n - 1){ p = i;     q = j + 1; explore(graph, pq, cost, size, i, j, p, q); } //Check right
         if(j > 0)    { p = i;     q = j - 1; explore(graph, pq, cost, size, i, j, p, q); } //Check left
     }
-    print_path(times, graph, pq, &size, m, n);                                                    //Print the distance and vertices of all exit possibilities
+    print_path(graph, pq, &size, m, n);                                                    //Print the distance and vertices of all exit possibilities
     /*for(i = 0; i < m*n; i++){
         printf("(%d, %d)\n ", (pq[i])->i, (pq[i])->i);
     }
@@ -53,13 +56,13 @@ void init_graph(Node*** graph, short** cost, int m, int n){
         }
     }
 }
-void print_path(int** times, Node*** graph, Node** pq, int* size, int m, int n){
+void print_path(Node*** graph, Node** pq, int* size, int m, int n){
     Node *scan = NULL;                                                                              //Node to scan over linked list of paths
     for(int i = 0; i < n; i++){                                                                     //Search through bottom row
         scan = (graph[m-1][i])->pred;                                                                
         printf("dist: %d, (%d, %d)", (graph[m-1][i])->dist, (graph[m-1][i])->i,(graph[m-1][i])->j);
         insert_node(pq, graph[m-1][i], size);                                                        //Insert each node back into PQ so we can extract min later
-        (*times)[i] = (graph[m-1][i])->dist;
+        //(*times)[i] = (graph[m-1][i])->dist;
         while(scan != NULL){
             printf("(%d, %d)", scan->i,scan->j);                                                    //Print out vertices of the path
             scan = scan->pred;
