@@ -14,12 +14,6 @@ int main(int argc, char **argv){
     int* times = malloc(n * sizeof times);                           //Fastest times for each exit option for each entry
     int i, j;                                                        //For indexing through array
     int size = 0;                                                    //Size of the PQ
-    for(i = 0; i < m; i++){                                          //Print out the graph to check we're good to start
-        for(j = 0; j < n; j++){
-            printf("%d ", (cost[i][j]));
-        }
-        printf("\n");
-    }
     Node* vertices = malloc(n*m * sizeof(Node));                     //Stores the vertices of the shortest path
     Node* path = malloc(sizeof(Node));                               //Pointer to hold potential shortest path
     Node* prev = malloc(sizeof(Node));                               //Pointer to hold shortest path
@@ -58,20 +52,20 @@ int main(int argc, char **argv){
             (vertices[i]).cost = -1;                                //Stop condition, required because the length of the path could be > rows
         }
     }
-    printf("Fastest Times:\n");
-    //fastest_times(times, argv[3], n);
-    for(i = 0; i < n; i++){
-        printf("%d ", times[i]);
-    }
-    printf("\n");
-    printf("Fastest Path:\n");
-    //fastest_path(vertices, argv[4]);
-    i = 0;
-    while((vertices[i]).cost >= 0){
-        printf("(%d, %d) ", (vertices[i]).i, (vertices[i]).j);
-        i++;
-    }
-    printf("cost: %d\n", vertices[0].dist);
+    //printf("Fastest Times:\n");
+    fastest_times(times, argv[3], n);
+    //for(i = 0; i < n; i++){
+        //printf("%d ", times[i]);
+    //}
+    //printf("\n");
+    //printf("Fastest Path:\n");
+    fastest_path(vertices, argv[4]);
+    //i = 0;
+    //while((vertices[i]).cost >= 0){
+        //printf("(%d, %d) ", (vertices[i]).i, (vertices[i]).j);
+        //i++;
+    //}
+    //printf("cost: %d\n", vertices[0].dist);
     for (i = 0; i < m; i++){
         free(cost[i]);
     }
@@ -80,18 +74,12 @@ int main(int argc, char **argv){
     free(vertices);
     free(path);
     free(prev);
-    for(i = 0; i < m; i++){
-        printf("%d", (pq[i])->cost);
-        //free(pq[i]);
-    }
     free(pq);
     for (i = 0; i < m; i++){
         for(j = 0; j < n; j++){
-            free((graph)[i][j]); //*(*graph + i)
+            free((graph)[i][j]); 
         }
-        //free((*graph)[j]); //*(*graph + i)
-        free(graph[i]) ;    //*(graph + i)
+        free(graph[i]) ;    
     }
     free(graph);
-    //free(cost);
 }
