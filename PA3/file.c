@@ -19,14 +19,7 @@ short** read_graph(char* filename, short* m, short* n){
     }
     fread(m, sizeof(short), 1, fptr);
     fread(n, sizeof(short), 1, fptr);
-    /*short *buffer = malloc(sizeof(short) * (*m * *n));
-    if(buffer == NULL){ fprintf(stderr, "malloc failed"); }
-    short **graph = malloc(sizeof(short)* *m);
-    if(graph == NULL){ fprintf(stderr, "malloc failed"); }
-    for (int i = 0; i < *m; i++){
-        graph[i] = &buffer[i * *n];
-    }*/
-    short** graph = malloc((*m) * sizeof(short));
+    short** graph = malloc((*m) * sizeof(short*));
     for(int i=0; i< *m; i++){
         graph[i] = malloc((*n) * sizeof(short));;
     }

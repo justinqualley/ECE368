@@ -65,6 +65,22 @@ int main(int argc, char **argv){
         i++;
     }
     printf("cost: %d\n", vertices[0].dist);
-    
+    for (i = 0; i < m; i++){
+        free(cost[i]);
+    }
+    free(cost); 
+    free(times);
+    free(vertices);
+    free(path);
+    free(prev);
+    for(i = 0; i < m; i++){
+        printf("%d", (pq[i])->cost);
+        free(pq[i]);
+    }
+    free(pq);
+    for (i = 0; i < m; i++){
+        free(graph[i]);
+    }
+    free(graph);
     //free(cost);
 }

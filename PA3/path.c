@@ -13,10 +13,10 @@ Node shortest(Node*** graph, Node** pq, short** cost, int size, int m, int n, in
         if(entered){ u->dist = enterCost; }
         i = u->i;                                                   //Find it's location i.e. identifier
         j = u->j;                                                 
-        if(i < m - 1){ p = i + 1; q = j;     explore(graph, pq, cost, size, i, j, p, q); } //Check bottom
-        if(i > 0)    { p = i - 1; q = j;     explore(graph, pq, cost, size, i, j, p, q); } //Check top
-        if(j < n - 1){ p = i;     q = j + 1; explore(graph, pq, cost, size, i, j, p, q); } //Check right
-        if(j > 0)    { p = i;     q = j - 1; explore(graph, pq, cost, size, i, j, p, q); } //Check left
+        if(i < m - 1){ p = i + 1; q = j;     explore(graph, pq, size, i, j, p, q); } //Check bottom
+        if(i > 0)    { p = i - 1; q = j;     explore(graph, pq, size, i, j, p, q); } //Check top
+        if(j < n - 1){ p = i;     q = j + 1; explore(graph, pq, size, i, j, p, q); } //Check right
+        if(j > 0)    { p = i;     q = j - 1; explore(graph, pq, size, i, j, p, q); } //Check left
         entered = 0;
     }
     for(i = 0; i < n; i++){                                                                      //Search through bottom row
@@ -36,9 +36,9 @@ void init_graph(Node*** graph, short** cost, int m, int n){
         }
     }
 }
-void explore(Node*** graph, Node **pq, short** cost, int size, int i, int j, int p, int q){
-    if((graph[p][q])->dist > cost[p][q] + (graph[i][j])->dist && !(graph[p][q])->visited){    //Update distance to node required
-        (graph[p][q])->dist = cost[p][q] + (graph[i][j])->dist;                               //d[v] = d[u] + w<u,v>
+void explore(Node*** graph, Node **pq, int size, int i, int j, int p, int q){
+    if((graph[p][q])->dist > (graph[p][q])->cost + (graph[i][j])->dist && !(graph[p][q])->visited){    //Update distance to node required
+        (graph[p][q])->dist = (graph[p][q])->cost + (graph[i][j])->dist;                               //d[v] = d[u] + w<u,v>
         (graph[p][q])->pred = graph[i][j];                                                    //pred[v] = u
         heapify(pq, size);                                                                    //Update(PQ)
     }
