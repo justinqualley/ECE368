@@ -30,8 +30,14 @@ int main(int argc, char **argv){
     for(i = 0; i < m; i++){ graph[i] = malloc(n * sizeof(Node*)); }  //Allocate 2D array of pointers
     for(i = 0; i < m; i++){
         for(j = 0; j < n; j++){
-            vertex = malloc(sizeof *vertex);
-            graph[i][j] = vertex;                                    
+            vertex = malloc(sizeof(Node));
+            vertex->dist = SHRT_MAX;                                //Init distance to each node is infinity
+            vertex->cost = cost[i][j];                              //Cost to travel to this node
+            vertex->pred = NULL;
+            vertex->i = i;                                          //It's position we will use as it's identifier
+            vertex->j = j;
+            vertex->visited = false;
+            graph[i][j] = vertex;   
             insert_node(pq, vertex, &size);                          //Put each vertex in the PQ
         }                                                            //Now graph and pq point towards the same data. Easy updating!
     }
