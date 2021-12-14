@@ -10,7 +10,7 @@ int main(int argc, char **argv){
     short m;                                                         //Number of rows
     short n;                                                         //Number of cols
     short **cost = read_graph(argv[1], &m, &n);                      //Store input binary as 2d cost matric
-    graph_to_txt(cost, argv[2], m, n);                               //Create text-viewable version of binary input
+    //graph_to_txt(cost, argv[2], m, n);                               //Create text-viewable version of binary input
     int* times = malloc(n * sizeof times);                           //Fastest times for each exit option for each entry
     int i, j;                                                        //For indexing through array
     int size = 0;                                                    //Size of the PQ
@@ -52,17 +52,19 @@ int main(int argc, char **argv){
         }
     }
     printf("Fastest Times:\n");
-    fastest_times(times, argv[3], n);
+    //fastest_times(times, argv[3], n);
     for(i = 0; i < n; i++){
         printf("%d ", times[i]);
     }
     printf("\n");
     printf("Fastest Path:\n");
-    fastest_path(vertices, argv[4]);
+    //fastest_path(vertices, argv[4]);
     i = 0;
     while((vertices[i]).cost >= 0){
         printf("(%d, %d) ", (vertices[i]).i, (vertices[i]).j);
         i++;
     }
     printf("cost: %d\n", vertices[0].dist);
+    
+    //free(cost);
 }
